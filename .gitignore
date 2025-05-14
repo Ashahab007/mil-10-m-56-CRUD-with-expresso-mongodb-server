@@ -1,0 +1,3 @@
+node_modules
+# 4.4 set the .env in gitignore
+.env
