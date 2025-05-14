@@ -59,6 +59,14 @@ async function run() {
       res.send(result);
     });
 
+    // 7.0 my requirement is show the added coffee in ui using get method. in 5.7, "/coffees" from sever is used to save data in server. to get data and show in ui same "/coffees" path is used. In this method we use find() to get all the data form the db as per documentation 'https://www.mongodb.com/docs/drivers/node/current/crud/query/retrieve/'
+
+    app.get("/coffees", async (req, res) => {
+      const cursor = coffeesCollections.find();
+      const result = await cursor.toArray(); //here toArray is not found in documentation. It's used from the module. Now check in browser url "localhost:3000/coffees" u will  get all the data
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
