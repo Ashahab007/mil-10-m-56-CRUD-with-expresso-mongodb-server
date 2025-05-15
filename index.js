@@ -8,7 +8,7 @@ require("dotenv").config();
 console.log(process.env.DB_USER); // check in server terminal
 console.log(process.env.DB_PASS); // check in server terminal
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 // 2.3 setup cors from Resource => middleware => cors from express js documentation
 const cors = require("cors");
@@ -67,6 +67,42 @@ async function run() {
       res.send(result);
     });
 
+    // 9.2 creating the api of view details using get method. Which is as similar as delete method with findOne method from the documentation.
+
+    app.get("/coffees/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await coffeesCollections.findOne(query);
+      res.send(result);
+      // now u can check in url by "http://localhost:3000/coffees/6824c77ebe9e87690f2487fc" that desired coffee item is showing
+    });
+
+    // 10.4 use put method to get the data from client side following the documentation. We use updateOne() method
+    app.put("/coffees/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedCoffee = req.body; //here the client side data is received via  body as object
+      const updateDoc = {
+        $set: updatedCoffee,
+      };
+      const result = await coffeesCollections.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+
+      res.send(result);
+    });
+
+    // 8.4 creating the delete api from documentation using deleteOne method
+    app.delete("/coffees/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await coffeesCollections.deleteOne(query);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
@@ -74,7 +110,7 @@ async function run() {
     );
   } finally {
     // Ensures that the client will close when you finish/error
-    // await client.close(); commented because it will close the ping after first test. but we don't want to close it.
+    // await client.close(); commented because it will close the 0ping after first test. but we don't want to close it.
   }
 }
 run().catch(console.dir);
@@ -85,7 +121,7 @@ app.use(express.json());
 
 // ! Note: express.json() particularly for POST, PUT, or PATCH requests where the client sends data to your server. It reads the Content-Type: application/json header. It parses the incoming JSON payload and populates req.body with the resulting object.
 
-// 2.1
+// 2.1 for checking the server
 app.get("/", (req, res) => {
   res.send("Running hot expresso coffee in server");
 });
