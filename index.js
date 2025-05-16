@@ -130,6 +130,14 @@ async function run() {
 
       res.send(result);
     });
+
+    // 15.3 creating api for delete user
+    app.delete("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await usersCollections.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close(); commented because it will close the 0ping after first test. but we don't want to close it.
