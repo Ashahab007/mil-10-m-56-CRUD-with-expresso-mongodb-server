@@ -105,12 +105,6 @@ async function run() {
       res.send(result);
     });
 
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-
     // Creating the api for user information
 
     // 14.0 Now my current requirement is show the users in a table form from the db thats we use get and find method
@@ -138,6 +132,30 @@ async function run() {
       const result = await usersCollections.deleteOne(query);
       res.send(result);
     });
+
+    // 16.5 update a single data after login so we use patch method with updateOne. Note: we will not take any id here. we will select by user email. because we don't know what is the id of that signed in user.
+
+    app.patch("/users", async (req, res) => {
+      const userSignInInfo = req.body;
+      console.log(userSignInInfo); // u can see the signed in user in server running terminal after completed the 16.7 step
+      const { email, lastSignInTime } = userSignInInfo;
+      // 16.8 filter the data using email
+      const filter = { email: email };
+      // 16.9 which key should be update
+      const updateDoc = {
+        $set: {
+          lastSignInTime: lastSignInTime,
+        },
+      };
+      const result = await usersCollections.updateOne(filter, updateDoc);
+      res.send(result); // Now fill up the sign in form then in db server u will find the lastSignInTime is updated
+    });
+
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close(); commented because it will close the 0ping after first test. but we don't want to close it.
