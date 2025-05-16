@@ -48,6 +48,8 @@ async function run() {
 
     // 5.6 creating the coffee database name "coffeeDB" then create a file named "coffees" under "coffeeDB" to create data in the mongodb server.
     const coffeesCollections = client.db("coffeeDB").collection("coffees");
+    // 13.3 creating the users file under coffeeDB database
+    const usersCollections = client.db("coffeeDB").collection("users");
 
     // 5.5 create api to get the data from the form by post method from the "https://www.mongodb.com/docs/drivers/node/current/crud/insert/" with 'Insert a Single Document'
     app.post("/coffees", async (req, res) => {
@@ -108,6 +110,26 @@ async function run() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
+
+    // Creating the api for user information
+
+    // 14.0 Now my current requirement is show the users in a table form from the db thats we use get and find method
+
+    app.get("/users", async (req, res) => {
+      const cursor = usersCollections.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    // 13.4 send the user info in db using post and insertOne() method
+    app.post("/users", async (req, res) => {
+      const newUser = req.body;
+      console.log(newUser);
+
+      const result = await usersCollections.insertOne(newUser);
+
+      res.send(result);
+    });
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close(); commented because it will close the 0ping after first test. but we don't want to close it.
