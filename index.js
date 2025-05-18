@@ -18,7 +18,10 @@ const port = process.env.PORT || 3000;
 // cofee_monster
 // wIres4IiG0n3pJbT
 
-//   4.0 My requirement is hide the user and password. as per documentation from dotenv create a .env file where package.json allocated.
+//   4.0 My requirement is hide the user and password. as per documentation from dotenv create a .env file where package.json file is allocated.
+
+/* 4.1 On that .env file type DB_USER=cofee_monster
+DB_PASS=wIres4IiG0n3pJbT */
 
 // 3.0 Now my requirement is connect the database with the mongodb server so go to the mongodb atlas. first create a database user so go to database access => Add New Database User => set user name and auto generated password => role admin => Add User => now go to cluster => connect => driver => View full code sample => copy the code => change the <db_username> <db_password> with user and password then check the ping in server terminal.
 
