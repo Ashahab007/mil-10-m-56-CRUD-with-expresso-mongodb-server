@@ -1,4 +1,4 @@
-// 1.0 In terminal mkdir server-name => cd server-name => npm init. Then install express mongodb dotenv with one command npm i express mongodb dotenv. After installation of express , In package.json file in "scripts" added "start": "node index.js",
+// 1.0 In terminal mkdir server-name => cd server-name => npm init. Then install express mongodb dotenv with one command npm i express mongodb dotenv cors. After installation of express , In package.json file in "scripts" added "start": "node index.js",
 
 // 2.0 now create an index.js and setup express.js server from express js documentation "Hello World"
 const express = require("express");
@@ -163,7 +163,7 @@ async function run() {
 }
 run().catch(console.dir);
 
-// 2.4 Use the middleware cors() and express.json() after that in running server terminal type nodemon index.js and then type in browser url localhost:3000 to show "Running hot expresso coffee in server" after that setup the client side
+// 2.4 Use the middleware cors() and express.json() after that run npm i nodemon and then in running server terminal type nodemon index.js and then type in browser url localhost:3000 to show "Running hot expresso coffee in server" after that setup the client side
 app.use(cors());
 app.use(express.json());
 
