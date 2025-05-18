@@ -1,6 +1,6 @@
-// 1.0 installed express mongodb dotenv with one command npm i express mongodb dotenv. After installation of express , In package.json file in "scripts" added "start": "node index.js",
+// 1.0 In terminal mkdir server-name => cd server-name => npm init. Then install express mongodb dotenv with one command npm i express mongodb dotenv. After installation of express , In package.json file in "scripts" added "start": "node index.js",
 
-// 2.0 setup express.js from express js documentation "Hello World"
+// 2.0 setup express.js server from express js documentation "Hello World"
 const express = require("express");
 
 // 4.2 import as per documentation
